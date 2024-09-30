@@ -1,0 +1,244 @@
+{
+    "preguntes": [
+      {
+        "id": 1,
+        "pregunta": "¿Cuál es la primera película del Universo Cinematográfico de Marvel (MCU)?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Thor" },
+          { "id": 2, "etiqueta": "Iron Man" },
+          { "id": 3, "etiqueta": "Capitán América: El primer vengador" },
+          { "id": 4, "etiqueta": "Hulk" }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://static.posters.cz/image/750/31869.jpg"
+      },
+      {
+        "id": 2,
+        "pregunta": "¿Quién dirigió la película 'Titanic' de 1997?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Steven Spielberg" },
+          { "id": 2, "etiqueta": "Martin Scorsese" },
+          { "id": 3, "etiqueta": "James Cameron" },
+          { "id": 4, "etiqueta": "Ridley Scott" }
+        ],
+        "resposta_correcta": 3,
+        "imatge": "https://media.cnn.com/api/v1/images/stellar/prod/cnne-1186622-120405051718-titanic-ship-cobh-horizontal-large-gallery.jpg?c=original"
+      },
+      {
+        "id": 3,
+        "pregunta": "¿Cuál es el nombre del protagonista en la saga de películas 'John Wick'?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Ethan Hunt" },
+          { "id": 2, "etiqueta": "Jason Bourne" },
+          { "id": 3, "etiqueta": "John Wick" },
+          { "id": 4, "etiqueta": "Frank Martin" }
+        ],
+        "resposta_correcta": 3,
+        "imatge": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFHD7rxLA_QewluwEzAl7-E8ZC9NIOu30naw&s"
+      },
+      {
+        "id": 4,
+        "pregunta": "¿Qué película ganó el Oscar a Mejor Película en 2020?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Joker" },
+          { "id": 2, "etiqueta": "1917" },
+          { "id": 3, "etiqueta": "Parasite" },
+          { "id": 4, "etiqueta": "Once Upon a Time in Hollywood" }
+        ],
+        "resposta_correcta": 3,
+        "imatge": "https://phantom-marca.unidadeditorial.es/9f595e9c3297f3e631b4b9de676727af/crop/0x28/585x417/resize/828/f/jpg/assets/multimedia/imagenes/2023/03/09/16783733987244.png"
+      },
+      {
+        "id": 5,
+        "pregunta": "¿En qué película de animación se escucha la canción 'Let It Go'?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Moana" },
+          { "id": 2, "etiqueta": "Frozen" },
+          { "id": 3, "etiqueta": "Tangled" },
+          { "id": 4, "etiqueta": "Brave" }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FBCAB220C8B342D6767F08E6EE6BFB39241D34D7DCE6E6F293E7439DF1DB9EAA/scale?width=1200&aspectRatio=1.78&format=webp"
+      },
+      {
+        "id": 6,
+        "pregunta": "¿Cuál es el nombre del planeta donde se desarrolla la mayor parte de la saga 'Star Wars'?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Naboo" },
+          { "id": 2, "etiqueta": "Hoth" },
+          { "id": 3, "etiqueta": "Tatooine" },
+          { "id": 4, "etiqueta": "Coruscant" }
+        ],
+        "resposta_correcta": 3,
+        "imatge": "https://m.media-amazon.com/images/I/81HDb5uGGsL._AC_SY679_.jpg"
+      },
+      {
+        "id": 7,
+        "pregunta": "¿Quién interpretó al Guasón en la película 'El caballero oscuro' (The Dark Knight)?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Jared Leto" },
+          { "id": 2, "etiqueta": "Jack Nicholson" },
+          { "id": 3, "etiqueta": "Joaquin Phoenix" },
+          { "id": 4, "etiqueta": "Heath Ledger" }
+        ],
+        "resposta_correcta": 4,
+        "imatge": "https://m.media-amazon.com/images/I/71W7L5zFqDL._AC_SY679_.jpg"
+      },
+      {
+        "id": 8,
+        "pregunta": "¿Cuál es el nombre del villano principal en 'Los Vengadores: Infinity War'?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Ultron" },
+          { "id": 2, "etiqueta": "Loki" },
+          { "id": 3, "etiqueta": "Thanos" },
+          { "id": 4, "etiqueta": "Red Skull" }
+        ],
+        "resposta_correcta": 3,
+        "imatge": "https://m.media-amazon.com/images/I/91JDm4LZrML._AC_SY679_.jpg"
+      },
+      {
+        "id": 9,
+        "pregunta": "¿Qué película popularizó la frase 'Hasta la vista, baby'?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Terminator 2" },
+          { "id": 2, "etiqueta": "Robocop" },
+          { "id": 3, "etiqueta": "Depredador" },
+          { "id": 4, "etiqueta": "El quinto elemento" }
+        ],
+        "resposta_correcta": 1,
+        "imatge": "https://m.media-amazon.com/images/I/81HR34VtD3L._AC_SY679_.jpg"
+      },
+      {
+        "id": 10,
+        "pregunta": "¿Quién dirigió la película de terror 'Psicosis' (1960)?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Stanley Kubrick" },
+          { "id": 2, "etiqueta": "Alfred Hitchcock" },
+          { "id": 3, "etiqueta": "Wes Craven" },
+          { "id": 4, "etiqueta": "Roman Polanski" }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://m.media-amazon.com/images/I/81vX+8d5cPL._AC_SY679_.jpg"
+      },
+      {
+        "id": 11,
+        "pregunta": "¿En qué año se estrenó la película 'El Señor de los Anillos: La Comunidad del Anillo'?",
+        "respostes": [
+          { "id": 1, "etiqueta": "1999" },
+          { "id": 2, "etiqueta": "2000" },
+          { "id": 3, "etiqueta": "2001" },
+          { "id": 4, "etiqueta": "2002" }
+        ],
+        "resposta_correcta": 3,
+        "imatge": "https://m.media-amazon.com/images/I/71mKhRi3e-L._AC_SY679_.jpg"
+      },
+      {
+        "id": 12,
+        "pregunta": "¿Qué película de Disney se estrenó primero?",
+        "respostes": [
+          { "id": 1, "etiqueta": "La Bella y la Bestia" },
+          { "id": 2, "etiqueta": "El Rey León" },
+          { "id": 3, "etiqueta": "Aladdin" },
+          { "id": 4, "etiqueta": "Blancanieves y los siete enanitos" }
+        ],
+        "resposta_correcta": 4,
+        "imatge": "https://m.media-amazon.com/images/I/71KzM3x3M2L._AC_SY679_.jpg"
+      },
+      {
+        "id": 13,
+        "pregunta": "¿Cuál es el verdadero nombre del personaje interpretado por Scarlett Johansson en el MCU?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Wanda Maximoff" },
+          { "id": 2, "etiqueta": "Natasha Romanoff" },
+          { "id": 3, "etiqueta": "Pepper Potts" },
+          { "id": 4, "etiqueta": "Carol Danvers" }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://m.media-amazon.com/images/I/71IU6sDRNUL._AC_SY679_.jpg"
+      }, {
+        "id": 14,
+        "pregunta": "¿Qué actor protagonizó la película 'Forrest Gump'?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Tom Cruise" },
+          { "id": 2, "etiqueta": "Leonardo DiCaprio" },
+          { "id": 3, "etiqueta": "Tom Hanks" },
+          { "id": 4, "etiqueta": "Brad Pitt" }
+        ],
+        "resposta_correcta": 3,
+        "imatge": "https://m.media-amazon.com/images/I/81Xe6jtO2wL._AC_SY679_.jpg"
+      },
+      {
+        "id": 15,
+        "pregunta": "¿Cuál es el nombre del barco en 'Piratas del Caribe'?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Perla Negra" },
+          { "id": 2, "etiqueta": "Holandés Errante" },
+          { "id": 3, "etiqueta": "Interceptor" },
+          { "id": 4, "etiqueta": "Venganza de la Reina Ana" }
+        ],
+        "resposta_correcta": 1,
+        "imatge": "https://m.media-amazon.com/images/I/91EBTaWkFlL._AC_SY679_.jpg"
+      },
+      {
+        "id": 16,
+        "pregunta": "¿Qué película animada cuenta la historia de dos robots llamados Wall-E y Eve?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Big Hero 6" },
+          { "id": 2, "etiqueta": "Wall-E" },
+          { "id": 3, "etiqueta": "Robots" },
+          { "id": 4, "etiqueta": "El gigante de hierro" }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://m.media-amazon.com/images/I/51UdiBUkerL._AC_SY679_.jpg"
+      },
+      {
+        "id": 17,
+        "pregunta": "¿Cómo se llama el personaje principal de la película 'Gladiador'?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Maximus" },
+          { "id": 2, "etiqueta": "Spartacus" },
+          { "id": 3, "etiqueta": "Leonidas" },
+          { "id": 4, "etiqueta": "Atticus" }
+        ],
+        "resposta_correcta": 1,
+        "imatge": "https://m.media-amazon.com/images/I/81YfXphbnIL._AC_SY679_.jpg"
+      },
+      {
+        "id": 18,
+        "pregunta": "¿En qué película de ciencia ficción vemos el personaje llamado Neo?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Blade Runner" },
+          { "id": 2, "etiqueta": "Matrix" },
+          { "id": 3, "etiqueta": "Minority Report" },
+          { "id": 4, "etiqueta": "Terminator" }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://m.media-amazon.com/images/I/71cs-dx8QZL._AC_SY679_.jpg"
+      },
+      {
+        "id": 19,
+        "pregunta": "¿Qué película de terror sigue a un grupo de amigos que son atacados por un tiburón?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Piraña" },
+          { "id": 2, "etiqueta": "El proyecto de la bruja de Blair" },
+          { "id": 3, "etiqueta": "Tiburón" },
+          { "id": 4, "etiqueta": "Anaconda" }
+        ],
+        "resposta_correcta": 3,
+        "imatge": "https://m.media-amazon.com/images/I/91hv3Jbj6lL._AC_SY679_.jpg"
+      },
+      {
+        "id": 20,
+        "pregunta": "¿Quién dirigió la trilogía original de 'El Señor de los Anillos'?",
+        "respostes": [
+          { "id": 1, "etiqueta": "Christopher Nolan" },
+          { "id": 2, "etiqueta": "Peter Jackson" },
+          { "id": 3, "etiqueta": "George Lucas" },
+          { "id": 4, "etiqueta": "David Fincher" }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://m.media-amazon.com/images/I/91eOGsz7c5L._AC_SY679_.jpg"
+      }
+    ]
+  }
+  
