@@ -37,25 +37,30 @@
 
 <script>
 
-import preguntes from "./assets/preguntas.json"
-
 export default {
-  name: 'App',
   data() {
     return {
-      preguntas1: preguntes.preguntes 
-    }
+      preguntas: [] // Inicializamos el array de preguntas
+    };
   },
-   methods: {
-    editarPregunta(id) {
-      alert(`Has seleccionado la pregunta con ID: ${id}`);
-      // Lógica adicional para cuando seleccionas la pregunta
-    },
-    omitirPregunta(id) {
-      this.preguntas1.splice(id-1,1); // Elimina la pregunta del array
+  mounted() {
+    this.getPreguntes(); // Llamamos al método fetch cuando el componente se monta
+  },
+  methods: {
+    async getPreguntes() {
+      try {
+        const response = await fetch('http://localhost:3000/api/preguntes');
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        this.preguntes = data;
+        this.maxRespostes = data.length > 0 ? data[0].respostes.length - 1 : 0; // Definir el maxRespostes
+      } catch (error) {
+        console.error('Error al obtener las preguntas:', error);
+        alert('No es va poder carregar les preguntes.'); // Mensaje de error al usuario
+      }
+    }
   }
-}
-}
+};
 </script>
 
 <style>
@@ -81,5 +86,7 @@ img {
   max-width: 300px; 
   height: auto;
 }
-
+h1{
+  text-align: center;
+}
 </style>
