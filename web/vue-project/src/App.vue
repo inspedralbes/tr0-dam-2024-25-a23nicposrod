@@ -3,10 +3,10 @@
     <h1>Lista de preguntas</h1>
     <br>
     <ul>
-      
-      <li v-for="pregunta in preguntas1" :key="pregunta.id">
-        <!-- Muestra la pregunta -->
+      <li v-for="pregunta in preguntes" :key="pregunta.id">
+        <!-- Muestra  la pregunta -->
         <h3>{{ pregunta.pregunta }}</h3>
+
         <div>
           <img :src="pregunta.imatge" alt="Imagen de la pregunta" class="imagen-pregunta" />
         </div>
@@ -23,40 +23,54 @@
 
         <!-- Añade los botones debajo de las respuestas -->
         <div class="buttons">
-          <button @click="editarPregunta(pregunta.id)">Editar</button>
-          <button @click="omitirPregunta(pregunta.id)">Eliminar</button>
+          <button @click="editarPregunta(pregunta.id)">Editar</button>  <!-- Cambié de preguntes.id a pregunta.id -->
+          <button @click="eliminarPregunta(pregunta.id)">Eliminar</button> <!-- Cambié de preguntes.id a pregunta.id -->
         </div>
-        <br>
-        <br>
+        <br><br>
       </li>
     </ul>
-
   </div>
 </template>
 
-
 <script>
-
 export default {
   data() {
     return {
-      preguntas: [] // Inicializamos el array de preguntas
+      preguntes: [] // Aquí almacenas las preguntas
     };
   },
   mounted() {
-    this.getPreguntes(); // Llamamos al método fetch cuando el componente se monta
+    this.obtenerPreguntas();
   },
   methods: {
-    async getPreguntes() {
+    async obtenerPreguntas() {
       try {
-        const response = await fetch('http://localhost:3000/api/preguntes');
-        if (!response.ok) throw new Error('Network response was not ok');
+        const response = await fetch('http://localhost:3000/api/preguntes');  // Asegúrate de que la URL sea correcta
+        if (!response.ok) {
+          throw new Error('Error al obtener las preguntas');
+        }
         const data = await response.json();
-        this.preguntes = data;
-        this.maxRespostes = data.length > 0 ? data[0].respostes.length - 1 : 0; // Definir el maxRespostes
+        this.preguntes = data;  // Asigna correctamente los datos a `preguntes`
       } catch (error) {
-        console.error('Error al obtener las preguntas:', error);
-        alert('No es va poder carregar les preguntes.'); // Mensaje de error al usuario
+        console.error('Error al hacer fetch:', error);
+      }
+    },
+    editarPregunta(id) {
+      alert('Editar pregunta con ID:'+ id);
+      // Implementa la lógica para editar una pregunta
+    },
+    async deletePregunta(id) {
+      try {
+        alert('parte 1')
+        const response = await fetch(`http://localhost:3000/api/preguntes/${id}`, {
+          method: 'DELETE'
+        });
+        alert('parte 2')
+        if (!response.ok) throw new Error('Network response was not ok');
+        this.getPreguntes(); // Recarga la lista después de eliminar
+      } catch (error) {
+        console.error('Error al eliminar la pregunta:', error);
+        alert('No es va poder eliminar la pregunta.'); // Mensaje de error al usuario
       }
     }
   }

@@ -7,8 +7,12 @@ const app = express();
 const PORT = 3000;
 
 // Middleware
-app.use(cors());  // Habilitar CORS para todas las rutas
-app.use(express.json());  // Para parsear JSON
+app.use(cors({
+  origin: '*',  // Permitir todas las orígenes (puedes restringirlo si es necesario)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Permitir estos métodos HTTP
+  allowedHeaders: ['Content-Type', 'Authorization']  // Permitir estos headers
+}));
+app.use(express.json()); // Para parsear JSON
 
 // Ruta para obtener todas las preguntas
 app.get('/api/preguntes', function(req, res) {
@@ -58,13 +62,29 @@ app.put('/preguntas/:id', (req, res) => {
 });
 
 // Ruta DELETE: Eliminar una pregunta por ID
-app.delete('/preguntas/:id', (req, res) => {
-  const preguntaIndex = preguntas.findIndex(p => p.id === parseInt(req.params.id));
-  if (preguntaIndex === -1) return res.status(404).send('Pregunta no encontrada');
+app.delete('/api/preguntes/:id', (req, res) => {
+  const idPregunta = parseInt(req.params.id);
 
-  preguntas.splice(preguntaIndex, 1);
-  res.status(204).send();
-});
+  // Leer el archivo JSON
+  fs.readFile('preguntas.json', 'utf8', (err, data) => {
+    if (err) return res.status(500).json({ message: 'Error al leer el archivo' });
+
+      const json = JSON.parse(data);
+      const index = json.preguntes.findIndex(p=> p.id === id);
+
+      if(index != -1){
+        json.preguntes.splice(index, 1);
+        fs.writeFile(filePath, JSON.stringify(json, null, 2), function(err){
+          if (err) return res.status(500).send({message: 'Error al guardar archivo'});
+          res.send({ message: 'Pregunta eliminada'})
+        });
+        
+      }else{
+        res.status(404).send({ message: 'Pregunta no encontrada'})
+      }
+    });
+  });
+
 
 // Iniciar el servidor
 app.listen(PORT, () => {
