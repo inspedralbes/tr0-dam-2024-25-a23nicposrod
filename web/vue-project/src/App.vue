@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Lista de preguntas</h1>
+    <button @click="obtenerMensaje()">ey</button>
     <br>
     <ul>
       <li v-for="pregunta in preguntes" :key="pregunta.id">
@@ -23,12 +24,39 @@
 
         <!-- Añade los botones debajo de las respuestas -->
         <div class="buttons">
-          <button @click="editarPregunta(pregunta.id)">Editar</button>  <!-- Cambié de preguntes.id a pregunta.id -->
-          <button @click="eliminarPregunta(pregunta.id)">Eliminar</button> <!-- Cambié de preguntes.id a pregunta.id -->
+          <button @click="abrirModal(pregunta)">Editar</button>  <!-- Cambié de preguntes.id a pregunta.id -->
+          <button @click="deletePregunta(pregunta.id)">Eliminar</button> <!-- Cambié de preguntes.id a pregunta.id -->
         </div>
         <br><br>
       </li>
     </ul>
+    <div v-if="mostrarModal" class="modal">
+      <div class="modal-content">
+        <span class="close" @click="cerrarModal()">&times;</span>
+        <h2>Editar Pregunta</h2>
+        <form @submit.prevent="guardarEdicion()">
+          <label for="pregunta">Pregunta:</label>
+          <input type="text" v-model="preguntaEditada.pregunta" id="pregunta">
+          <br><br>
+
+          <label for="respuestas">Respuestas:</label>
+          <div v-for="(respuesta, index) in preguntaEditada.respostes" :key="index">
+            <input type="text" v-model="respuesta.etiqueta">
+          </div>
+          <br>
+
+          <label for="respostaCorrecta">Respuesta Correcta: </label>
+          <select v-model="preguntaEditada.resposta_correcta">
+            <option v-for="(respuesta, index) in preguntaEditada.respostes" :key="index" :value="respuesta.id">
+              {{ respuesta.etiqueta }}
+            </option>
+          </select>
+          <br><br>
+
+          <button type="submit">Guardar</button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,7 +64,9 @@
 export default {
   data() {
     return {
-      preguntes: [] // Aquí almacenas las preguntas
+      preguntes: [], // Aquí almacenas las preguntas
+      mostrarModal: false, // Controla si el modal se muestra o no
+      preguntaEditada: {}
     };
   },
   mounted() {
@@ -55,29 +85,72 @@ export default {
         console.error('Error al hacer fetch:', error);
       }
     },
-    editarPregunta(id) {
-      alert('Editar pregunta con ID:'+ id);
-      // Implementa la lógica para editar una pregunta
+    async obtenerMensaje() {
+      try {
+        const response = await fetch('http://localhost:3000/api/hola');  // Ajusta la URL según tu servidor
+        if (!response.ok) {
+          throw new Error('Error al obtener el mensaje');
+        }
+        const data = await response.json();
+        alert(data.message);  // Muestra un alert con el mensaje obtenido del servidor
+      } catch (error) {
+        console.error('Error al hacer fetch:', error);
+        alert('Hubo un problema al obtener el mensaje');  // Muestra un alert si hay un error
+      }
     },
+    abrirModal(pregunta) {
+      // Copia profunda para evitar modificar la original hasta que se guarde
+      this.preguntaEditada = JSON.parse(JSON.stringify(pregunta));
+      this.mostrarModal = true;
+    },
+    cerrarModal() {
+      this.mostrarModal = false;
+    },
+    async guardarEdicion() {
+  try {
+    const response = await fetch(`http://localhost:3000/api/preguntes/${this.preguntaEditada.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(this.preguntaEditada),
+    });
+
+    if (!response.ok) throw new Error('Error al guardar la pregunta');
+
+    // Vuelve a obtener la lista de preguntas
+    await this.obtenerPreguntas();  // Actualiza la lista de preguntas desde el servidor
+
+    // Cierra el modal después de guardar
+    this.cerrarModal();
+  } catch (error) {
+    console.error('Error al guardar la pregunta editada:', error);
+  }
+}
+,
     async deletePregunta(id) {
       try {
-        alert('parte 1')
         const response = await fetch(`http://localhost:3000/api/preguntes/${id}`, {
           method: 'DELETE'
         });
-        alert('parte 2')
+        
         if (!response.ok) throw new Error('Network response was not ok');
-        this.getPreguntes(); // Recarga la lista después de eliminar
+        
+        // Filtra la pregunta eliminada de la lista actual sin necesidad de hacer otra solicitud
+        this.preguntes = this.preguntes.filter(pregunta => pregunta.id !== id);
+
       } catch (error) {
         console.error('Error al eliminar la pregunta:', error);
-        alert('No es va poder eliminar la pregunta.'); // Mensaje de error al usuario
+        alert('No se pudo eliminar la pregunta.'); // Mensaje de error al usuario
       }
-    }
+  }
+
   }
 };
 </script>
 
 <style>
+#pregunta{
+  width: 400px;
+}
 .buttons {
   margin-top: 10px;
 }
@@ -102,5 +175,38 @@ img {
 }
 h1{
   text-align: center;
+}
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 10px;
+  width: 600px;
+  height: 400px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
 }
 </style>
