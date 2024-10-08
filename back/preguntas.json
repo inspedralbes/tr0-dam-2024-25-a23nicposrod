@@ -14,11 +14,11 @@
         },
         {
           "id": 3,
-          "etiqueta": ""
+          "etiqueta": "Capitán América: El primer vengador"
         },
         {
           "id": 4,
-          "etiqueta": ""
+          "etiqueta": "Hulk"
         }
       ],
       "resposta_correcta": 2,
@@ -479,6 +479,30 @@
       ],
       "resposta_correcta": 2,
       "imatge": "https://m.media-amazon.com/images/I/91eOGsz7c5L._AC_SY679_.jpg"
+    },
+    {
+      "pregunta": "dafdaegsrgfwef",
+      "respostes": [
+        {
+          "etiqueta": "edqf",
+          "id": 1
+        },
+        {
+          "etiqueta": "wwegdsegegg",
+          "id": 2
+        },
+        {
+          "etiqueta": "fq",
+          "id": 3
+        },
+        {
+          "etiqueta": "fgff",
+          "id": 4
+        }
+      ],
+      "resposta_correcta": 1,
+      "imatge": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPRrkjV-YKAGIkF0LV0f9WY-SMbWtS8sWMWQ&s",
+      "id": 21
     }
   ]
 }

@@ -60,18 +60,34 @@ app.get('/preguntas/:id', (req, res) => {
   res.json(pregunta);
 });
 
-// Ruta POST: Crear una nueva pregunta
-app.post('/preguntas', (req, res) => {
-  const nuevaPregunta = {
-    id: preguntas.length + 1,
-    pregunta: req.body.pregunta,
-    imagen: req.body.imagen,
-    respostes: req.body.respostes,
-    resposta_correcta: req.body.resposta_correcta
-  };
-  preguntas.push(nuevaPregunta);
-  res.status(201).json(nuevaPregunta);
+
+
+app.post('/api/preguntes', function (req, res) {
+    const filePath = path.join(__dirname, 'preguntas.json'); 
+    const nuevaPregunta = req.body; 
+    if (!nuevaPregunta || !nuevaPregunta.pregunta || !nuevaPregunta.respostes || !nuevaPregunta.resposta_correcta || !nuevaPregunta.imatge) {
+        return res.status(400).send({ message: 'Faltan datos para la nueva pregunta' });
+    }
+    fs.readFile(filePath, 'utf8', function (err, data) {
+        if (err) {
+            return res.status(500).send({ message: 'Error al leer el archivo' });
+        }
+        const json = JSON.parse(data);
+        const nuevoId = json.preguntes.length > 0 ? Math.max(...json.preguntes.map(p => p.id)) + 1 : 1;
+        nuevaPregunta.id = nuevoId;
+        nuevaPregunta.respostes.forEach((resposta, index) => {
+            resposta.id = index + 1;
+        });
+        json.preguntes.push(nuevaPregunta);
+        fs.writeFile(filePath, JSON.stringify(json, null, 2), function (err) {
+            if (err) {
+                return res.status(500).send({ message: 'Error al guardar la nueva pregunta' });
+            }
+            res.send({ message: 'Pregunta agregada', pregunta: nuevaPregunta }); // Responder con éxito
+        });
+    });
 });
+
 
 // Ruta PUT: Actualizar una pregunta existente
 app.put('/api/preguntes/:id', function(req, res) {
