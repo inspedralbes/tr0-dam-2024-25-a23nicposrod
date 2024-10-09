@@ -4,7 +4,7 @@ const path = require('path');  // Importar el módulo 'path' para manejar rutas
 const cors = require('cors');  // Importar cors
 
 const app = express();
-const PORT = 3000;
+const PORT = 443;
 
 // Middleware
 app.use(cors({
@@ -149,5 +149,6 @@ app.delete('/api/preguntes/:id', function(req, res) {
 
 // Iniciar el servidor
 app.listen(PORT, () => {
-  console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
+  console.log(`Servidor ejecutándose en http://192.168.0.155:${PORT}`);
+
 });
