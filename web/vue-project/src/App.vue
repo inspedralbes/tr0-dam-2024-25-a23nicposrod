@@ -120,7 +120,7 @@ export default {
   methods: {
     async obtenerPreguntas() {
       try {
-        const response = await fetch('http://localhost:3000/api/preguntes');  // Asegúrate de que la URL sea correcta
+        const response = await fetch('http://a23nicposrod.dam.inspedralbes.cat:22333/api/preguntes');  // Asegúrate de que la URL sea correcta
         if (!response.ok) {
           throw new Error('Error al obtener las preguntas');
         }
@@ -132,7 +132,7 @@ export default {
     },
     async obtenerMensaje() {
       try {
-        const response = await fetch('http://localhost:3000/api/hola');  // Ajusta la URL según tu servidor
+        const response = await fetch('http://a23nicposrod.dam.inspedralbes.cat:22333/api/hola');  // Ajusta la URL según tu servidor
         if (!response.ok) {
           throw new Error('Error al obtener el mensaje');
         }
@@ -163,7 +163,7 @@ export default {
     },
     async agregarNuevaPregunta() {
   try {
-      const response = await fetch('http://localhost:3000/api/preguntes', {
+      const response = await fetch('http://a23nicposrod.dam.inspedralbes.cat:22333/api/preguntes', {
           method: 'POST', // Método POST para agregar
           headers: {
               'Content-Type': 'application/json' // Tipo de contenido JSON
@@ -197,7 +197,7 @@ export default {
     },
     async guardarEdicion() {
   try {
-    const response = await fetch(`http://localhost:3000/api/preguntes/${this.preguntaEditada.id}`, {
+    const response = await fetch(`http://a23nicposrod.dam.inspedralbes.cat:22333/api/preguntes/${this.preguntaEditada.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(this.preguntaEditada),
@@ -217,7 +217,7 @@ export default {
 ,
     async deletePregunta(id) {
       try {
-        const response = await fetch(`http://localhost:3000/api/preguntes/${id}`, {
+        const response = await fetch(`http://a23nicposrod.dam.inspedralbes.cat:22333/api/preguntes/${id}`, {
           method: 'DELETE'
         });
         
