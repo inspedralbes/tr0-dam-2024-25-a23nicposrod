@@ -1,4 +1,6 @@
 const express = require('express');
+const { spawn } = require('child_process');
+const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');  // Importar el módulo 'path' para manejar rutas
 const cors = require('cors');  // Importar cors
@@ -13,6 +15,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']  // Permitir estos headers
 }));
 app.use(express.json()); // Para parsear JSON
+app.use(bodyParser.json());
 
 // Ruta para obtener todas las preguntas
 app.get('/api/preguntes', function(req, res) {
@@ -26,30 +29,47 @@ app.get('/api/preguntes', function(req, res) {
     });
 });
 app.get('/api/hola', function(req, res) {
-  const { spawn } = require('child_process');
+    console.log("Inicio del proceso");
+  
+    // Iniciar el proceso de Python
+    const pythonProcess = spawn('python', ['./server.py']);
+    let pythonOutput = '';
+  
+    // Capturar los datos del stdout de Python
+    pythonProcess.stdout.on('data', (data) => {
+        pythonOutput += data.toString();  
+    });
+  
+    // Capturar los errores del stderr de Python
+    pythonProcess.stderr.on('data', (data) => {
+        const errorMessage = data.toString().trim();
+        console.error('Error en el proceso de Python:', errorMessage);
+        res.status(500).json({ error: errorMessage }); // Enviar el error al cliente
+    });
+  
+    // Cuando el proceso de Python se cierra
+    pythonProcess.on('close', (code) => {
+        console.log(`El proceso de Python se cerró con el código ${code}`);
+        if (code === 0) {
+            try {
+                // Aquí asumimos que la salida es un JSON
+                const stats = JSON.parse(pythonOutput.trim());
+  
+                // Enviar la respuesta al cliente
+                res.json({
+                    message: 'Estadísticas generadas correctamente',
+                    statistics: stats
+                });
+            } catch (error) {
+                console.error('Error al procesar la salida de Python:', error);
+                res.status(500).json({ error: 'Error al procesar la salida de Python.' });
+            }
+        } else {
+            res.status(500).json({ error: 'El script de Python no se ejecutó correctamente.' });
+        }
+    });
+  });
 
-  console.log("Inicio del proceso");
-
-  const pythonProcess = spawn('python', ['./server.py', 'text', '4']);
-  let pythonOutput = '';
-  pythonProcess.stdout.on('data', (data) => {
-      pythonOutput += data.toString();  
-      console.log('[Mensaje recibido desde Python:] ', pythonOutput.trim(), "  [end message]");
-  });
-  pythonProcess.on('close', (code) => {
-      console.log(`El proceso de Python se cerró con el código ${code}`);
-      if (code === 0) {
-          res.json({ message: pythonOutput.trim() });
-      } else {
-          res.status(500).json({ error: 'El script de Python no se ejecutó correctamente.' });
-      }
-  });
-  pythonProcess.stderr.on('data', (data) => {
-      const errorMessage = data.toString().trim();
-      console.error('Error en el proceso de Python:', errorMessage);
-      res.status(500).json({ error: errorMessage }); // Enviar el error al cliente
-  });
-});
 
 
 
@@ -122,6 +142,40 @@ app.put('/api/preguntes/:id', function(req, res) {
     });
   });
   
+  app.put('/api/estadisticas/:id', (req, res) => {
+    const preguntaId = parseInt(req.params.id);
+    const { aciertos, fallos } = req.body;
+
+    // Leer el archivo JSON
+    fs.readFile('./estadisticas.json', 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error al leer el archivo JSON.' });
+        }
+
+        let jsonData = JSON.parse(data);
+        const pregunta = jsonData.preguntes.find(p => p.id === preguntaId);
+
+        if (!pregunta) {
+            return res.status(404).json({ error: 'Pregunta no encontrada.' });
+        }
+
+        // Actualizar los aciertos y fallos
+        if (aciertos !== undefined) {
+            pregunta.aciertos += aciertos; // Aumenta los aciertos
+        }
+        if (fallos !== undefined) {
+            pregunta.fallos += fallos; // Aumenta los fallos
+        }
+
+        // Guardar los cambios en el archivo JSON
+        fs.writeFile('./datos.json', JSON.stringify(jsonData, null, 2), 'utf8', (err) => {
+            if (err) {
+                return res.status(500).json({ error: 'Error al guardar el archivo JSON.' });
+            }
+            res.json({ message: 'Pregunta actualizada.', pregunta });
+        });
+    });
+});
 
 // Ruta DELETE: Eliminar una pregunta por ID
 app.delete('/api/preguntes/:id', function(req, res) {

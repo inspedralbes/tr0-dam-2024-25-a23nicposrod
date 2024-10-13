@@ -1,84 +1,81 @@
 <template>
-  <div>
-    <h1>Lista de preguntas</h1>
-    <button @click="obtenerMensaje()">Estadisticas</button>
- 
-    <br>
-    <ul>
-      <li v-for="pregunta in preguntes" :key="pregunta.id">
-        <!-- Muestra  la pregunta -->
+  <div class="container">
+    <h1>Admisitrador de Preguntas</h1>
+    <button class="btn btn-stats" @click="obtenerMensaje()">Ver Estadísticas</button>
+
+    <ul class="question-list">
+      <li v-for="pregunta in preguntes" :key="pregunta.id" class="question-item">
         <h3>{{ pregunta.pregunta }}</h3>
 
-        <div>
-          <img :src="pregunta.imatge" alt="Imagen de la pregunta" class="imagen-pregunta" />
+        <div class="question-image">
+          <img :src="pregunta.imatge" alt="Imagen de la pregunta" />
         </div>
-        <!-- Muestra las respuestas -->
-        <ul>
+
+        <ul class="answer-list">
           <li 
             v-for="respuesta in pregunta.respostes" 
             :key="respuesta.id"
             :class="{ 'correct-answer': respuesta.id === pregunta.resposta_correcta }"
+            class="answer-item"
           >
             {{ respuesta.etiqueta }}
           </li>
         </ul>
 
-        <!-- Añade los botones debajo de las respuestas -->
         <div class="buttons">
-          <button @click="abrirModal(pregunta)">Editar</button>  <!-- Cambié de preguntes.id a pregunta.id -->
-          <button @click="deletePregunta(pregunta.id)">Eliminar</button> <!-- Cambié de preguntes.id a pregunta.id -->
+          <button class="btn btn-edit" @click="abrirModal(pregunta)">Editar</button>
+          <button class="btn btn-delete" @click="deletePregunta(pregunta.id)">Eliminar</button>
         </div>
-        <br><br>
       </li>
     </ul>
-    <button @click="abrirModalNuevaPregunta()" class="floating-button">Nueva Pregunta</button>
 
-    <!--Modal Editar Pregunta-->
+    <button class="floating-button" @click="abrirModalNuevaPregunta()">Nueva Pregunta</button>
+
+    <!-- Modal Editar Pregunta -->
     <div v-if="mostrarModal" class="modal">
       <div class="modal-content">
         <span class="close" @click="cerrarModal()">&times;</span>
         <h2>Editar Pregunta</h2>
         <form @submit.prevent="guardarEdicion()">
           <label for="pregunta">Pregunta:</label>
-          <input type="text" v-model="preguntaEditada.pregunta" id="pregunta">
+          <input type="text" v-model="preguntaEditada.pregunta" id="pregunta" required />
           <br><br>
-
           <label for="respuestas">Respuestas:</label>
           <div v-for="(respuesta, index) in preguntaEditada.respostes" :key="index">
-            <input type="text" v-model="respuesta.etiqueta">
+            <input type="text" v-model="respuesta.etiqueta" required />
           </div>
-          <br>
-
+          <br><br>
           <label for="respostaCorrecta">Respuesta Correcta: </label>
-          <select v-model="preguntaEditada.resposta_correcta">
+          <select v-model="preguntaEditada.resposta_correcta" required>
             <option v-for="(respuesta, index) in preguntaEditada.respostes" :key="index" :value="respuesta.id">
               {{ respuesta.etiqueta }}
             </option>
           </select>
           <br><br>
-
-          <button type="submit">Guardar</button>
+          <label for="imagen">Imagen:</label>
+          <input type="text" v-model="preguntaEditada.imatge" id="imagen" placeholder="URL de la imagen" />
+          <br><br>
+          <button class="btn btn-save" type="submit">Guardar</button>
         </form>
       </div>
     </div>
-    <!--Modal Crear Pregunta-->
+
+    <!-- Modal Nueva Pregunta -->
     <div v-if="mostrarModalAgregarPregunta" class="modal-agregar-pregunta">
       <div class="modal-content-agregar">
         <span class="close" @click="cerrarModalNuevaPregunta()">&times;</span>
         <h2>Agregar Nueva Pregunta</h2>
         <form @submit.prevent="agregarNuevaPregunta()">
           <label for="pregunta">Pregunta:</label>
-          <input type="text" v-model="nuevaPregunta.pregunta" id="pregunta" required>
-          <br><br>
-
+          <input type="text" v-model="nuevaPregunta.pregunta" id="pregunta" required />
+          <br><br>  
           <label for="respuestas">Respuestas:</label>
           <div v-for="(respuesta, index) in nuevaPregunta.respostes" :key="index">
-            <input type="text" v-model="respuesta.etiqueta" placeholder="Respuesta" required>
-            <button type="button" @click="eliminarRespuesta(index)">Eliminar</button>
+            <input type="text" v-model="respuesta.etiqueta" placeholder="Respuesta" required />
+            <button class="btn btn-remove" type="button" @click="eliminarRespuesta(index)">Eliminar</button>
           </div>
-          <button type="button" @click="agregarRespuesta()">Agregar Respuesta</button>
+          <button class="btn btn-add" type="button" @click="agregarRespuesta()">Agregar Respuesta</button>
           <br><br>
-
           <label for="respostaCorrecta">Respuesta Correcta: </label>
           <select v-model="nuevaPregunta.resposta_correcta" required>
             <option v-for="(respuesta, index) in nuevaPregunta.respostes" :key="index" :value="index">
@@ -86,17 +83,16 @@
             </option>
           </select>
           <br><br>
-
           <label for="imagen">Imagen:</label>
-          <input type="text" v-model="nuevaPregunta.imatge" id="imagen" placeholder="URL de la imagen">
+          <input type="text" v-model="nuevaPregunta.imatge" id="imagen" placeholder="URL de la imagen" />
           <br><br>
-
-          <button type="submit">Guardar Pregunta</button>
+          <button class="btn btn-save" type="submit">Guardar Pregunta</button>
         </form>
       </div>
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -235,43 +231,131 @@ export default {
   }
 };
 </script>
-
-<style>
-#pregunta {
-  width: 400px;
+<style >
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
-.buttons {
-  margin-top: 10px;
-}
-
-.buttons button {
-  margin-right: 10px;
-  padding: 5px 10px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #878c85;
-}
-
-button:hover {
-  background-color: #babbba;
-}
-
-.correct-answer {
-  color: green;
-  font-weight: bold;
-}
-
-img {
-  max-width: 300px;
-  height: auto;
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #1f1f1f;
+  border-radius: 10px;
 }
 
 h1 {
-  text-align: center;
+  text-align: center; 
+  font-family: Arial Black; 
+  font-weight: bold; 
+  font-size: 40px; 
+  color: #303030; 
+  text-shadow: 0 1px 0 #ddd, 0 2px 0 #ccc, 0 3px 0 #bbb, 0 4px 0 #aaa, 0 5px 0 #acacac, 0 6px 1px rgba(0,0,0,0.1), 0 0 5px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.3), 0 3px 5px rgba(0,0,0,0.2), 0 5px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.2), 0 20px 20px rgba(0,0,0,0.15);
 }
 
-/* Estilos para el modal */
+/* Buttons */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.btn-stats {
+  background-color: #17a2b8;
+  color: white;
+  display: block;
+  margin: 20px auto;
+}
+
+.btn-edit {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-save {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-remove {
+  background-color: #ff5e57;
+  color: white;
+}
+
+.btn-add {
+  background-color: #17a2b8;
+  color: white;
+}
+
+/* Floating Button */
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 30px;
+  background-color: #28a745;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.floating-button:hover {
+  background-color: #218838;
+}
+
+/* Questions List */
+.question-list {
+  list-style: none;
+  padding: 0;
+}
+
+.question-item {
+  background-color: #333333;
+  color: #e0e0e0;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.question-image img {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+/* Answers */
+.answer-list {
+  list-style: none;
+  padding: 0;
+}
+
+.answer-item {
+  padding: 5px 0;
+}
+
+.correct-answer {
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Modal */
 .modal,
 .modal-agregar-pregunta {
   display: flex;
@@ -281,19 +365,20 @@ h1 {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
 }
 
 .modal-content,
 .modal-content-agregar {
-  background-color: #fefefe;
+  background-color: #333333;
+  color: #e0e0e0;
   padding: 20px;
   border-radius: 10px;
   width: 600px;
-  max-height: 80vh; /* Solo para el modal agregar */
-  overflow-y: auto; /* Solo para el modal agregar */
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .close {
@@ -306,26 +391,6 @@ h1 {
 
 .close:hover,
 .close:focus {
-  color: #000;
-}
-
-/* Estilos para el botón flotante */
-.floating-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  background-color: #28a745;
-  color: white;
-  font-size: 18px;
-  border: none;
-  border-radius: 50px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  z-index: 1000;
-}
-
-.floating-button:hover {
-  background-color: #218838;
+  color: #e0e0e0;
 }
 </style>
