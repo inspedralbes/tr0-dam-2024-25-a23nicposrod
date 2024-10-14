@@ -32,8 +32,8 @@ app.get('/api/hola', function(req, res) {
     console.log("Inicio del proceso");
   
     // Iniciar el proceso de Python
-    const pythonProcess = spawn('python', ['./server.py']);
-    let pythonOutput = '';
+    const pythonProcess = spawn('python3', ['./server.py']);
+    let pythonOutput = '';  
   
     // Capturar los datos del stdout de Python
     pythonProcess.stdout.on('data', (data) => {
@@ -142,7 +142,7 @@ app.put('/api/preguntes/:id', function(req, res) {
     });
   });
   
-  app.put('/api/estadisticas/:id', (req, res) => {
+app.put('/api/estadisticas/:id', (req, res) => {
     const preguntaId = parseInt(req.params.id);
     const { aciertos, fallos } = req.body;
 
@@ -168,7 +168,7 @@ app.put('/api/preguntes/:id', function(req, res) {
         }
 
         // Guardar los cambios en el archivo JSON
-        fs.writeFile('./datos.json', JSON.stringify(jsonData, null, 2), 'utf8', (err) => {
+        fs.writeFile('./estadisticas.json', JSON.stringify(jsonData, null, 2), 'utf8', (err) => {
             if (err) {
                 return res.status(500).json({ error: 'Error al guardar el archivo JSON.' });
             }
